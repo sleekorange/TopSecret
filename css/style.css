@@ -1,0 +1,81 @@
+body {
+	background: #f8f8f8;
+	font-family: 'Raleway', sans-serif;
+}
+
+.container {
+	width: 960px;
+}
+
+#logo {
+	padding: 15px 0;
+}
+
+#banner {
+	background-image: url("../images/banner.jpg");
+	background-position: center center;
+	height: 400px;
+}
+
+#content {
+	min-height: 400px;
+	padding-bottom: 40px;
+}
+
+h1, h2, h3, h4, h5 {
+	text-transform: uppercase;
+	color:#1C539D;
+}
+
+
+#footer {
+	background: #1C539D;
+	color: #f8f8f8;
+	padding: 10px 0;
+	height: 100px;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 10px;
+}
+
+.frontText {
+	text-align: center;
+	padding: 10px 0;
+}
+
+.loginHolder {
+	text-align: right;
+	padding: 15px 0;
+}
+
+.loginBtn {
+	text-transform: uppercase;
+	border: none;
+	background: #1C539D;
+	color: #fff;
+	padding: 5px 10px;
+	border-radius: 4px;
+
+	-moz-transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	transition: 0.5s all;
+}
+
+.loginBtn .fa {
+	margin-left: 5px;
+	font-size: 15px;
+}
+
+.loginBtn:hover {
+	background: #243D5F;
+}
+
+
+
+
+
+
+
+
+
