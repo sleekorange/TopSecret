@@ -1,24 +1,26 @@
 <?php
 
     class Page {
-        public $meta_title;
-        public $meta_keywords;
-        public $html_body;
 
-        public function displayPage() {
-        	$page ='
-        	<html>
-        	<head>
-        		<title>'.$this->meta_title.'</title>
-        		<meta name="keywords" content="'.$this->meta_keywords.'" />
-        	</head>
-        	<body>
-        		'.$this->html_body.'
-        	</body>
-        	</html>
-    ';
-        	echo $page;
+        function __construct() 
+        { 
+            $a = func_get_args(); 
+            $i = func_num_args(); 
+            if (method_exists($this,$f='__construct'.$i)) { 
+                call_user_func_array(array($this,$f),$a); 
+            } 
+        } 
+
+        function __construct3($layout, $title, $content){
+            // $this->displayPage($layout, $title, $content);
+            include 'templates/_layout.php';
         }
+
+        function __construct4($layout, $title, $content, $contentTwo){
+            // $this->displayMore($layout, $title, $content, $contentTwo);
+            include 'templates/_layout.php';
+        }
+
     }
 
 ?>
