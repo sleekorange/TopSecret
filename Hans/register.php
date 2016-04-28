@@ -10,7 +10,7 @@ echo "Something works!".$username;
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>title</title>
+    <title>JonasPower</title>
   </head>
   <body>
   	<form method="POST">
