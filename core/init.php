@@ -2,10 +2,10 @@
 
 $GLOBALS['config'] = array(
     'mysql' => array(
-        'host' => 'mysql.hostinger.dk',
-        'username' => 'u650868839_sec',
+        'host' => 'web63.meebox.net',
+        'username' => 'hansmygi_secure',
         'password' => 'hemmelig123kode',
-        'db' => 'u650868839_sec'
+        'db' => 'hansmygi_security'
     )
 );
 
@@ -14,6 +14,9 @@ spl_autoload_register(function($class) {
 });
 
 
-
+// 'host' => 'mysql.hostinger.dk',
+//         'username' => 'u650868839_sec',
+//         'password' => 'hemmelig123kode',
+//         'db' => 'u650868839_sec'
 
 ?>

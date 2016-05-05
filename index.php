@@ -1,5 +1,6 @@
 <?php
 	require_once 'core/init.php';
+	$obj = new user();
 ?>
 
 <!DOCTYPE html>
