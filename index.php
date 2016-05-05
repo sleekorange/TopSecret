@@ -1,8 +1,50 @@
 <?php
 	require_once 'core/init.php';
 	$obj = new user();
-?>
 
+// Methods:
+function saltFunction ( $password ) {
+			$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
+			$passwordSalt = $password . $salt;
+			$passwordArray = array('passwordSalt' => $passwordSalt, 'salt' => $salt);
+			return $passwordArray;
+		}
+
+function hashFunction ( $password ) {
+			$passwordHash = password_hash($password, PASSWORD_DEFAULT)."\n";
+			return $passwordHash;
+		}
+
+
+if(isset($_POST['username']) && isset($_POST['password'])){
+	if(!empty($_POST['username']) && !empty($_POST['password'])){
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		echo "Something works!".$username.$password;
+		echo "<br>";
+
+		
+
+		$passwordSalted = saltFunction("string")['passwordSalt'];
+
+
+		
+
+		//$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
+		//$passwordSalt = $password . $salt;
+		// $passwordHash = password_hash($passwordSalt, PASSWORD_DEFAULT)."\n";
+		// $hashedSalt = hash('sha512',$salt);
+		$obj->username = "Hans";
+		var_dump($obj);
+		var_dump($passwordSalted);
+		var_dump(hashFunction($passwordSalted));
+	}
+	
+
+}
+
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,47 +57,13 @@
 	<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div id="wrapper">
-	<div id="top">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-6">
-					<h3>Rate my pet</h3>
-				</div>
-				<div class="col-sm-6">
-					<div class="loginHolder">
-						<button class="loginBtn">Login <i class="fa fa-lock"></i></button>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="banner">
 
-	</div>
+  	<form method="POST">
+  		<input type="text" placeholder="username" name="username"></input>
+  		<input type="password" placeholder="password" name="password">
+		<button type="submit">Submit</button>
+  	</form>
 
-	<div id="content">
-		<div class="container">
-			<div class="frontText">
-				<h1>Rate my pet</h1>
-				<p>Lorem ipsum dolor sit amet, cursus volutpat volutpat tempor urna bibendum, ultrices arcu in. </p>
-				<p>Lorem ipsum dolor sit amet, cursus volutpat volutpat tempor urna bibendum. </p>
-			</div>
-			
-
-			</div>
-		</div>
-	</div>
-
-	<div id="footer">
-		<div class="container">
-		Rate my Pet - Copyright 2016 ©
-		</div>
-	</div>
-
-</div>
-	
 	
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

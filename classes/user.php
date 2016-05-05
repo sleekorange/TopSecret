@@ -1,27 +1,38 @@
 <?php
 
 class user {
+	public $username,
+			$password;
+
 public function __construct() {
 		$this -> _db = DB::getInstance();
-		print "construct \n";
+		 print "User created! \n";
 	}
+	public function setUsername($newUsername)
+  {
+      $this->username = $newUsername;
+  }
+ 
+  public function getUsername()
+  {
+      return $this->username . "<br />";
+  }
+
+  public function setUsername($newUsername)
+  {
+      $this->username = $newPassword;
+  }
+ 
+  public function getUsername()
+  {
+      return $this->password . "<br />";
+  }
 
 
 }
 
 
 
-// Methods:
-function saltFunction ( $password ) {
-			$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
-			$passwordSalt = $password . $salt;
-			$passwordArray = array('passwordSalt' => $passwordSalt, 'salt' => $salt);
-			return $passwordArray;
-		}
 
-function hashFunction ( $password ) {
-			$passwordHash = password_hash($password, PASSWORD_DEFAULT)."\n";
-			return $passwordHash;
-		}
 
 ?>
