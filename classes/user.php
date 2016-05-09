@@ -5,7 +5,7 @@ class user {
 			$password;
 
 public function __construct() {
-		$this -> _db = DB::getInstance();
+		
 		 print "User created! \n";
 	}
 	public function setUsername($newUsername)
@@ -15,19 +15,29 @@ public function __construct() {
  
   public function getUsername()
   {
-      return $this->username . "<br />";
+      return $this->username;
   }
 
-  public function setUsername($newUsername)
+  public function setPassword($newPassword)
   {
-      $this->username = $newPassword;
+      $this->password = $newPassword;
   }
  
-  public function getUsername()
+  public function getPassword()
   {
-      return $this->password . "<br />";
+      return $this->password;
   }
 
+  public function saveUser()
+  {
+  	global $oDb;
+  	$query = $oDb->prepare("SELECT * FROM posts");
+  	$query->execute();
+  	$aResult = $query -> fetchAll(PDO::FETCH_ASSOC);
+  	$sFlights = json_encode($aResult);
+
+  	echo $sFlights;
+  }
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 	require_once 'core/init.php';
-	$obj = new user();
+	
 
 // Methods:
 function saltFunction ( $password ) {
@@ -18,32 +18,32 @@ function hashFunction ( $password ) {
 
 if(isset($_POST['username']) && isset($_POST['password'])){
 	if(!empty($_POST['username']) && !empty($_POST['password'])){
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		echo "Something works!".$username.$password;
-		echo "<br>";
+		$obj = new user();
+		$obj->setUsername($_POST['username']);
+		$obj->setPassword($_POST['password']);
 
 		
 
 		$passwordSalted = saltFunction("string")['passwordSalt'];
 
 
-		
-
+		$obj->saveUser();
+		var_dump($obj->getUsername());
+		var_dump($obj->getPassword());
 		//$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
 		//$passwordSalt = $password . $salt;
 		// $passwordHash = password_hash($passwordSalt, PASSWORD_DEFAULT)."\n";
 		// $hashedSalt = hash('sha512',$salt);
-		$obj->username = "Hans";
-		var_dump($obj);
-		var_dump($passwordSalted);
-		var_dump(hashFunction($passwordSalted));
+		
 	}
-	
+	var_dump($passwordSalted);
+		var_dump(hashFunction($passwordSalted));
 
 }
 
-
+		
+		
+		
 ?>
 <!DOCTYPE html>
 <html>

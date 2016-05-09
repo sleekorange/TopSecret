@@ -1,13 +1,12 @@
 <?php 
 
-$GLOBALS['config'] = array(
-    'mysql' => array(
-        'host' => 'web63.meebox.net',
-        'username' => 'hansmygi_secure',
-        'password' => 'hemmelig123kode',
-        'db' => 'hansmygi_security'
-    )
-);
+$servername = "web63.meebox.net";
+$username = "hansmygi_secure";
+$password = "hemmelig123kode";
+$dbname = "hansmygi_security";
+
+$oDb = new PDO("mysql:host=$servername; dbname=$dbname", $username, $password);
+
 
 spl_autoload_register(function($class) {
     require_once 'classes/' . $class . '.php';
