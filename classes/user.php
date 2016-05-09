@@ -31,12 +31,11 @@ public function __construct() {
   public function saveUser()
   {
   	global $oDb;
-  	$query = $oDb->prepare("SELECT * FROM posts");
+  	$username = $this->getUsername();
+  	echo "saving user ".$username; 
+  	$query = $oDb->prepare("INSERT INTO `posts`(`post`) VALUES (:paramName)");
+  	$query->bindParam(':paramName', $username);
   	$query->execute();
-  	$aResult = $query -> fetchAll(PDO::FETCH_ASSOC);
-  	$sFlights = json_encode($aResult);
-
-  	echo $sFlights;
   }
 
 }
