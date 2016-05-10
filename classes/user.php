@@ -1,8 +1,8 @@
 <?php
 
 class user {
-	public $username,
-			$password;
+
+	public $username,$password, $email, $phone, $firstName, $lastname;
 
 public function __construct() {
 		
@@ -109,6 +109,56 @@ public function __construct() {
   	$query->bindParam(':paramLn', $lastName);
   	$query->execute();
   	return true;
+  }
+
+  public function login()
+  {
+  	global $oDb;
+  	$username = $this -> getUsername();
+  	$password = $this -> getPassword();
+  	// fetch from database
+  	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramN");
+  	$query -> bindParam(':paramN', $username);
+  	$query->execute();
+  	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
+  	if(empty($aResult))
+  	{
+
+  		echo "Login failed.";
+  		return false;
+  	}
+	
+	$fun = new functions();
+	$hash = trim($aResult[0]['password']);
+	if($fun->deHashFunction($password, $hash))
+		{
+			$id = trim($aResult[0]['id']);
+			if($this->setSession($id))
+			{
+				return true;
+			}
+			return false;
+		}
+	return false;
+
+  }
+
+  private function setSession($id)
+  {
+  	if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+	}
+  	$_SESSION['username'] = $this->getUsername();
+  	$_SESSION['id'] = $id;
+  	return true;
+  }
+
+  public function checkSession()
+  {
+  	if (session_status() == PHP_SESSION_NONE) {
+    return false;
+	}
+	return true;
   }
 
 }

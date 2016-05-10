@@ -1,43 +1,5 @@
 <?php
-	require_once 'core/init.php';
-	require_once 'classes/functions.php';
-
-
-
-if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['firstName']) && isset($_POST['lastName'])){
-	if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['firstName']) && !empty($_POST['lastName'])){
-
-		// ENCODE THE INPUTS
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$email = $_POST['email'];
-		$phone = $_POST['phone'];
-		$firstName = $_POST['firstName'];
-		$lastName = $_POST['lastName'];
-		
-
-
-		$obj = new user();
-		// Hasing and salting password
-		$passwordHashed = hashFunction($password);
-		// Saving userdata to database
-		
-		$obj->setUsername($username);
-		$obj->setPassword($passwordHashed);
-		$obj->setEmail($email);
-		$obj->setPhone($phone);
-		$obj->setFirstName($firstName);
-		$obj->setLastName($lastName);
-		//Save
-		$obj->saveUser();
-	}
-	
-
-}
-
-		
-		
-		
+	require_once 'core/init.php';	
 ?>
 <!DOCTYPE html>
 <html>
@@ -52,14 +14,20 @@ if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email
 </head>
 <body>
 
-  	<form method="POST">
+  	<form method="POST" action="classes/register.php">
   		<input type="text" placeholder="username" name="username"></input>
   		<input type="password" placeholder="password" name="password">
   		<input type="text" placeholder="email" name="email">
-  		<input type="text" placeholder="phone" name="phone">
+  		<input type="number" placeholder="phone" name="phone">
   		<input type="text" placeholder="First Name" name="firstName">
   		<input type="text" placeholder="Last Name" name="lastName">
-		<button type="submit">Submit</button>
+		<button type="submit">Register</button>
+  	</form>
+
+  	<form method="POST" action="classes/login.php">
+		<input type="text" placeholder="username" name="username">
+		<input type="text" placeholder="password" name="password">
+		<button type="submit">Login</button>
   	</form>
 
 	
