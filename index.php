@@ -1,5 +1,16 @@
 <?php
-	require_once 'core/init.php';	
+	require_once 'core/init.php';
+	require_once'classes/user.php';
+	// is user logged in
+	$obj = new user();
+	if($obj->checkSession())
+	{
+		Echo "Hello, you are logged in!";
+	}	
+	else{
+		var_dump($obj->checkSession());
+		echo "guess not";
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +24,6 @@
 	<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
   	<form method="POST" action="classes/register.php">
   		<input type="text" placeholder="username" name="username"></input>
   		<input type="password" placeholder="password" name="password">

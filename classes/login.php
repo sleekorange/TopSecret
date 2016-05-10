@@ -12,17 +12,14 @@ if(isset($_POST['username']) && isset($_POST['password'])){
 		$obj->username = $username;
 		$obj->password = $password;
 		var_dump($obj->login());
-		if(!$obj->login())
-		{
-			echo "Error";
-		}else{
-			echo "success";
-			$obj->checkSession();
-		}
-		
-
-
-
+			if(!$obj->login())
+			{
+				echo "Error";
+			}else{
+				echo "Hello ".urlencode($obj->username);
+				
+	var_dump(session_status());
+			}
 		}
 	}
 ?>

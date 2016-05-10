@@ -132,8 +132,7 @@ public function __construct() {
 	$hash = trim($aResult[0]['password']);
 	if($fun->deHashFunction($password, $hash))
 		{
-			$id = trim($aResult[0]['id']);
-			if($this->setSession($id))
+			if($this->setSession($aResult))
 			{
 				return true;
 			}
@@ -143,19 +142,19 @@ public function __construct() {
 
   }
 
-  private function setSession($id)
+  private function setSession($user)
   {
   	if (session_status() == PHP_SESSION_NONE) {
-    session_start();
 	}
-  	$_SESSION['username'] = $this->getUsername();
-  	$_SESSION['id'] = $id;
+	$oUser = json_encode($user);
+	$_SESSION['theActiveUserIs'] = $oUser;
   	return true;
   }
 
   public function checkSession()
   {
-  	if (session_status() == PHP_SESSION_NONE) {
+  	if (!isset($_SESSION['theActiveUserIs'])) 
+  	{
     return false;
 	}
 	return true;
