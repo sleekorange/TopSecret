@@ -1,43 +1,37 @@
 <?php
 	require_once 'core/init.php';
-	
-
-// Methods:
-function saltFunction ( $password ) {
-			$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
-			$passwordSalt = $password . $salt;
-			$passwordArray = array('passwordSalt' => $passwordSalt, 'salt' => $salt);
-			return $passwordArray;
-		}
-
-function hashFunction ( $password ) {
-			$passwordHash = password_hash($password, PASSWORD_DEFAULT)."\n";
-			return $passwordHash;
-		}
+	require_once 'classes/functions.php';
 
 
-if(isset($_POST['username']) && isset($_POST['password'])){
-	if(!empty($_POST['username']) && !empty($_POST['password'])){
+
+if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['firstName']) && isset($_POST['lastName'])){
+	if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['firstName']) && !empty($_POST['lastName'])){
+
+		// ENCODE THE INPUTS
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+		$email = $_POST['email'];
+		$phone = $_POST['phone'];
+		$firstName = $_POST['firstName'];
+		$lastName = $_POST['lastName'];
+		
+
+
 		$obj = new user();
-		$obj->setUsername($_POST['username']);
-		$obj->setPassword($_POST['password']);
-
+		// Hasing and salting password
+		$passwordHashed = hashFunction($password);
+		// Saving userdata to database
 		
-
-		$passwordSalted = saltFunction("string")['passwordSalt'];
-
-
+		$obj->setUsername($username);
+		$obj->setPassword($passwordHashed);
+		$obj->setEmail($email);
+		$obj->setPhone($phone);
+		$obj->setFirstName($firstName);
+		$obj->setLastName($lastName);
+		//Save
 		$obj->saveUser();
-		var_dump($obj->getUsername());
-		var_dump($obj->getPassword());
-		//$salt = mcrypt_create_iv(50, MCRYPT_DEV_URANDOM);
-		//$passwordSalt = $password . $salt;
-		// $passwordHash = password_hash($passwordSalt, PASSWORD_DEFAULT)."\n";
-		// $hashedSalt = hash('sha512',$salt);
-		
 	}
-	var_dump($passwordSalted);
-		var_dump(hashFunction($passwordSalted));
+	
 
 }
 
@@ -61,6 +55,10 @@ if(isset($_POST['username']) && isset($_POST['password'])){
   	<form method="POST">
   		<input type="text" placeholder="username" name="username"></input>
   		<input type="password" placeholder="password" name="password">
+  		<input type="text" placeholder="email" name="email">
+  		<input type="text" placeholder="phone" name="phone">
+  		<input type="text" placeholder="First Name" name="firstName">
+  		<input type="text" placeholder="Last Name" name="lastName">
 		<button type="submit">Submit</button>
   	</form>
 
