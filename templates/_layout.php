@@ -30,20 +30,24 @@
 	            <div class="container">	
 
 	                <?php  
-	                	switch ($layout) {
-	                		case 'fullWidth':
-	                			include 'templates/fullWidth.php';
-	                			break;
-	                		case 'split':
-	                			include 'templates/split.php';
-	                			break;
-	                		case 'fourEight':
-	                			include 'templates/fourEight.php';
-	                			break;	                		
-	                		default:
-	                			include 'templates/fullWidth.php';
-	                			break;
-	                	}
+	                include 'templates/'.$layout.'.php';
+	                	// switch ($layout) {
+	                	// 	case 'fullWidth':
+	                	// 		include 'templates/'.$layout.'.php';
+	                	// 		break;
+	                	// 	case 'split':
+	                	// 		include 'templates/split.php';
+	                	// 		break;
+	                	// 	case 'fourEight':
+	                	// 		include 'templates/fourEight.php';
+	                	// 		break;
+	                	// 	case 'blogPost':
+	                	// 		include 'templates/blogPost.php';
+	                	// 		break;		                		
+	                	// 	default:
+	                	// 		include 'templates/fullWidth.php';
+	                	// 		break;
+	                	// }
 	                ?>
 	            </div>
 	        </div>
@@ -60,5 +64,7 @@
 	    <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
 	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"</script>
+	    <script src="js/scripts.js"></script>
 	</body>
 </html>

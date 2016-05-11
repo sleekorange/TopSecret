@@ -28,5 +28,5 @@
      * Note: Param 3 and 4 must be declared before the instantiation of  the class.
      */
 
-	$page = new Page("split", "Second Page", $content, $contentTwo);
+	$page = new Page("blogPost", "Second Page", $content, $contentTwo);
 ?>

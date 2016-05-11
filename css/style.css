@@ -43,6 +43,7 @@ body {
 	padding-bottom: 40px;
 }
 
+
 h1, h2, h3, h4, h5 {
 	text-transform: uppercase;
 	color:#57734F;
@@ -112,6 +113,58 @@ h2 {
     height: 37px;
     margin-bottom: 0;
     width: 100%;
+}
+
+
+/* POSTS */
+
+.postDiv {
+	padding: 20px;
+	background: #fff;
+	border-radius: 4px;
+	border: 1px solid #ddd;
+}
+
+.form-horizontal .form-group {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.blogPost {
+	padding: 10px;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
+}
+
+.postCreator {
+	color: #ddd;
+	font-size: 11px;
+	margin-bottom: 15px;
+}
+
+.blogPostImg {
+	margin-top: 10px;
+}
+
+.blogPostImg img {
+	width: 150px;
+	border: 3px solid #ddd;
+}
+
+/* COMMENTS */
+
+.commentsDiv {
+	margin-top: 10px;
+}
+
+.commentBox {
+	padding: 10px;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #ddd;
+	margin-bottom: 20px;
 }
 
 
