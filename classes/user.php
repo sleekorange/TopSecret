@@ -123,7 +123,6 @@ SELECT * FROM Users WHERE email LIKE :paramM");
   {
   			$to = $this->getEmail(); // Send email to our user
   			$username = $this->getUsername();
-  			$hash = $hash;
 		 // create a new cURL resource
             $ch = curl_init();
             
@@ -173,6 +172,7 @@ SELECT * FROM Users WHERE email LIKE :paramM");
   private function setSession($user)
   {
   	if (session_status() == PHP_SESSION_NONE) {
+  		return false;
 	}
 	$oUser = json_encode($user);
 	$_SESSION['theActiveUserIs'] = $oUser;
@@ -186,6 +186,15 @@ SELECT * FROM Users WHERE email LIKE :paramM");
     return false;
 	}
 	return true;
+  }
+
+  public function endSession()
+  {
+  	session_destroy();
+  	if (session_status() == PHP_SESSION_NONE) {
+  		return true;
+	}
+	return false;
   }
 
 }

@@ -39,44 +39,66 @@
 		<input type="text" placeholder="password" name="password">
 		<button type="submit">Login</button>
   	</form>
+  	<form action="classes/logout.php">
+  		<button>Logout</button>
+  	</form>
 	<h3>I want to change my</h3>
   	<form>
   		<label>Password</label>
-  		<input type="checkbox" name="passwordCheck" value="1" checked>
+  		<input type="checkbox" class="changeInfoCheck" id="passwordCheck" value="passwordCheck">
   		<label>First Name</label>
-  		<input type="checkbox" name="firstNameCheck" value="2">
+  		<input type="checkbox" class="changeInfoCheck" id="firstNameCheck" value="firstNameCheck">
   		<label>Last Name</label>
-  		<input type="checkbox" name="lastNameCheck" value="3">
+  		<input type="checkbox" class="changeInfoCheck" id="lastNameCheck" value="lastNameCheck">
   		<label>Phone</label>
-  		<input type="checkbox" name="phoneCheck" value="4">
-		
-  		<script></script>
-		<form method="POST" action="classes/changeInfo.php" style="hidden">
+  		<input type="checkbox" class="changeInfoCheck" id="phoneCheck" value="phoneCheck">
+	</form>	
+		<form id="passwordForm" method="POST" action="classes/changeInfo.php" style="display:none">
 			<input type="text" name="oldPassword">
 			<input type="text" name="password">
 			<input type="submit">
 		</form>
-		<form method="POST" action="classes/changeInfo.php" style="hidden">
-			<input type="text" name="oldPassword">
+		<form id="firstNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
+			<input type="text" name="firstName">
 			<input type="submit">
 		</form>
-		<form method="POST" action="classes/changeInfo.php" style="hidden">
-			<input type="text" name="oldPassword">
-			<input type="text" name="password">
+		<form id="lastNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
+			<input type="text" name="lastName">
 			<input type="submit">
 		</form>
-		<form method="POST" action="classes/changeInfo.php" style="hidden">
-			<input type="text" name="oldPassword">
-			<input type="text" name="password">
+		<form id="phoneForm" method="POST" action="classes/changeInfo.php" style="display:none">
+			<input type="text" name="phone">
 			<input type="submit">
 		</form>
+
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+  		
+  		<script>
+			
+    			$('.changeInfoCheck').on('change', function() {
+    				$('.changeInfoCheck').not(this).prop('checked', false); 
+			        var selected =  $(this).val();
+			        console.log(selected);
+			        switch(selected)
+			        {
+			        	case 'passwordCheck':
+			        			$('#')
+			        	break;
+			        }
+			   
+				})
+
+
+
+  		</script>
   	</form>
 
 	
 
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+
+
 
 
 </body>
