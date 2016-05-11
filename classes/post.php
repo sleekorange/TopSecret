@@ -9,7 +9,6 @@ class Post {
 
     public function create($title, $post, $userId) {
         global $oDb;       
-        $post = $post . $img;
         $oQuery = $oDb->prepare("INSERT INTO Posts (title, postText, userId, deleted) VALUES( :sTitle, :sPost, :sUserId, 0)");
         $oQuery->bindValue(':sTitle', $title);
         $oQuery->bindValue(':sPost', $post);

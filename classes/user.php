@@ -6,11 +6,19 @@ public function __construct() {
 		 // print "User created! \n";
 	}
 
-  public function getUserId(){
+  public function getUserIdSession(){
     if($this->checkSession()){
       $user = json_decode($_SESSION['theActiveUserIs']);
       $userId = $user[0]->id;
       return $userId;
+    } 
+  }
+
+  public function getUserNameSession(){
+    if($this->checkSession()){
+      $user = json_decode($_SESSION['theActiveUserIs']);
+      $userName = $user[0]->username;
+      return $userName;
     } 
   }
 
@@ -142,7 +150,6 @@ public function __construct() {
   	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
   	if(empty($aResult))
   	{
-  		echo "Login failed.";
   		return false;
   	}
 	
@@ -150,10 +157,8 @@ public function __construct() {
 	$hash = trim($aResult[0]['password']);
 	if($fun->deHashFunction($password, $hash))
 		{
-      echo "hejsa";
 			if($this->setSession($aResult))
 			{
-        echo "TRUEEEEE";
 				return true;
 			}
 			return false;
@@ -175,6 +180,15 @@ public function __construct() {
     return false;
 	}
 	return true;
+  }
+
+  public function endSession()
+  {
+    session_destroy();
+    if (session_status() == PHP_SESSION_NONE) {
+      return true;
+  }
+  return false;
   }
 }
 ?>

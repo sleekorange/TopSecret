@@ -3,7 +3,7 @@
     $post = new Post();
     $obj = new user();
 
-    $test = $obj->getUserId();
+    
 
     if($obj->checkSession()){
         if (Input::exists()) {
@@ -15,11 +15,6 @@
             }
         }
 
-        try {
-            $data = json_decode($post->getAll());       
-        } catch(Exception $e) {
-            echo $error, '<br>';
-        }
     } else {
         header('Location: /topsecret/');
     }

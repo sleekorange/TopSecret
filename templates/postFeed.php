@@ -3,12 +3,14 @@
     $post = new Post();
     $obj = new user();
 
-    if (Input::exists()) {
-        try {
-            $comment->create($obj->getUserId(), Input::get('postId') , Input::get('comment'));
-        } catch(Exception $e) {
-            echo $error, '<br>';
-        }
+    if($obj->checkSession()){
+      if (Input::exists()) {
+          try {
+              $comment->create($obj->getUserId(), Input::get('postId') , Input::get('comment'));
+          } catch(Exception $e) {
+              echo $error, '<br>';
+          }
+      }
     }
 
 	try {
