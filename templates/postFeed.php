@@ -50,7 +50,7 @@
                     $post->showImgs($data[$i]->imgUrl);
               echo '</div>';
               echo '<a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapse'.$data[$i]->id.'" aria-expanded="false" aria-controls="collapse'.$data[$i]->id.'    ">
-                    <i class="fa fa-comment-o" aria-hidden="true"></i> Comments ()</a>';
+                    <i class="fa fa-comment-o" aria-hidden="true"></i> Comments ('.$data[$i]->commentsCount.')</a>';
               echo '</div>';
                 echo '<div class="collapse" id="collapse'.$data[$i]->id.'">';
                 if($obj->checkSession()){
