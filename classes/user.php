@@ -124,17 +124,18 @@ SELECT * FROM Users WHERE email LIKE :paramM");
   			$to = $this->getEmail(); // Send email to our user
   			$username = $this->getUsername();
 		 // create a new cURL resource
-            $ch = curl_init();
+            // $ch = curl_init();
             
             // set URL and other appropriate options
-             curl_setopt($ch, CURLOPT_URL, "http://hansmygind.dk/mail-daemon/verify.php?to=$to&username=$username&hash=$hash");
-            curl_setopt($ch, CURLOPT_HEADER, 0);
+             // curl_setopt($ch, CURLOPT_URL, "http://hansmygind.dk/mail-daemon/verify.php?to=$to&username=$username&hash=$hash");
+  			header('Location: '."http://hansmygind.dk/mail-daemon/verify.php?to=$to&username=$username&hash=$hash");
+            // curl_setopt($ch, CURLOPT_HEADER, 0);
 
-            // grab URL and pass it to the browser
-            curl_exec($ch);
+            // // grab URL and pass it to the browser
+            // curl_exec($ch);
 
-            // close cURL resource, and free up system resources
-            curl_close($ch);
+            // // close cURL resource, and free up system resources
+            // curl_close($ch);
             return true;
   }
 
