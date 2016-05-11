@@ -39,6 +39,38 @@
 		<input type="text" placeholder="password" name="password">
 		<button type="submit">Login</button>
   	</form>
+	<h3>I want to change my</h3>
+  	<form>
+  		<label>Password</label>
+  		<input type="checkbox" name="passwordCheck" value="1" checked>
+  		<label>First Name</label>
+  		<input type="checkbox" name="firstNameCheck" value="2">
+  		<label>Last Name</label>
+  		<input type="checkbox" name="lastNameCheck" value="3">
+  		<label>Phone</label>
+  		<input type="checkbox" name="phoneCheck" value="4">
+		
+  		<script></script>
+		<form method="POST" action="classes/changeInfo.php" style="hidden">
+			<input type="text" name="oldPassword">
+			<input type="text" name="password">
+			<input type="submit">
+		</form>
+		<form method="POST" action="classes/changeInfo.php" style="hidden">
+			<input type="text" name="oldPassword">
+			<input type="submit">
+		</form>
+		<form method="POST" action="classes/changeInfo.php" style="hidden">
+			<input type="text" name="oldPassword">
+			<input type="text" name="password">
+			<input type="submit">
+		</form>
+		<form method="POST" action="classes/changeInfo.php" style="hidden">
+			<input type="text" name="oldPassword">
+			<input type="text" name="password">
+			<input type="submit">
+		</form>
+  	</form>
 
 	
 

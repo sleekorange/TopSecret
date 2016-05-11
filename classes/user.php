@@ -68,12 +68,16 @@ public function __construct() {
       return $this->lastName;
   }
 
-  public function userExist($username)
+  public function userExist()
   {
+  	$username = $this->getUsername();
+  	$email = $this->getEmail();
   	global $oDb;
   	echo "checking if user exists";
-  	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramName");
+  	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramName UNION ALL
+SELECT * FROM Users WHERE email LIKE :paramM");
 	$query->bindParam(':paramName', $username);
+	$query->bindParam(':paramM', $email);
 	$query->execute();
 	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
 	var_dump($aResult);
@@ -94,7 +98,7 @@ public function __construct() {
   	$firstName = $this->getFirstName();
   	$lastName = $this->getLastName();
  	// check if user exist
-	if($this->userExist($username) != true)
+	if($this->userExist() != true)
 	{
 		echo "User creation failed";
 		return false;
