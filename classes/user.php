@@ -107,8 +107,32 @@ public function __construct() {
   	$query->bindParam(':paramT', $phone);
   	$query->bindParam(':paramFn', $firstName);
   	$query->bindParam(':paramLn', $lastName);
-  	$query->execute();
-  	return true;
+  	if($query->execute())
+  	{
+  		$this->sendActivation($this->getPassword());
+  		return true;
+  	}
+  	return false;
+  }
+
+  private function sendActivation($hash)
+  {
+  			$to = $this->getEmail(); // Send email to our user
+  			$username = $this->getUsername();
+  			$hash = $hash;
+		 // create a new cURL resource
+            $ch = curl_init();
+            
+            // set URL and other appropriate options
+             curl_setopt($ch, CURLOPT_URL, "http://hansmygind.dk/mail-daemon/verify.php?to=$to&username=$username&hash=$hash");
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+
+            // grab URL and pass it to the browser
+            curl_exec($ch);
+
+            // close cURL resource, and free up system resources
+            curl_close($ch);
+            return true;
   }
 
   public function login()
