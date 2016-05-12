@@ -1,6 +1,8 @@
 <?php
 	require_once 'core/init.php';
 	require_once'classes/user.php';
+
+	
 	// is user logged in
 	$obj = new user();
 	if($obj->checkSession())

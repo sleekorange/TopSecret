@@ -3,6 +3,8 @@ require_once 'user.php';
 require_once 'functions.php';
 require_once '../core/init.php';
 
+
+
 if(isset($_POST['username']) && isset($_POST['password'])){
 	if(!empty($_POST['username']) && !empty($_POST['password']) ){
 		$username = $_POST['username'];
