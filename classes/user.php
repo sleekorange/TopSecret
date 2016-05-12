@@ -68,6 +68,22 @@ public function __construct() {
       return $this->lastName;
   }
 
+  public function getUserId(){
+    if($this->checkSession()){
+      $user = json_decode($_SESSION['theActiveUserIs']);
+      $userId = $user[0]->id;
+      return $userId;
+    } 
+  }
+
+  public function getSessionPassword(){
+    if($this->checkSession()){
+      $user = json_decode($_SESSION['theActiveUserIs']);
+      $password = $user[0]->password;
+      return $password;
+    } 
+  }
+
   public function userExist()
   {
   	$username = $this->getUsername();
@@ -180,6 +196,19 @@ SELECT * FROM Users WHERE email LIKE :paramM");
   	return true;
   }
 
+  private function updateSessionPassword($newPassword)
+  {
+  	if($this->checkSession()){
+      $user = json_decode($_SESSION['theActiveUserIs']);
+      $user[0]->password = $newPassword;
+      unset($_SESSION['theActiveUserIs']);
+      $_SESSION['theActiveUserIs'] = json_encode($user);
+      var_dump($_SESSION['theActiveUserIs']);
+      return true;
+    } 
+
+  }
+
   public function checkSession()
   {
   	if (!isset($_SESSION['theActiveUserIs'])) 
@@ -197,6 +226,52 @@ SELECT * FROM Users WHERE email LIKE :paramM");
 	}
 	return false;
   }
+
+  public function changePassword($newPassword)
+  {
+  	$fun = new functions();
+  	global $oDb;
+  	// retriveing current userId
+  	$id = $this->getUserId();
+  	$hash = trim($this->getSessionPassword());
+  	$oldPassword = trim($this->getPassword());
+  	// verifying that current password is correct
+  	if($fun->deHashFunction($oldPassword,$hash))
+  	{
+  		if($hashNewPassword = $fun->hashFunction($newPassword)){
+  			echo $hashNewPassword;
+	  		$query = $oDb->prepare("UPDATE Users SET password= :paramP WHERE id= :paramI");
+	  		$query->bindParam(':paramP', $hashNewPassword);
+	  		$query->bindParam(':paramI', $id);
+	  		if($query->execute()){
+				if($this->updateSessionPassword($hashNewPassword))
+				{
+					return true;
+				}
+  			}
+  		}
+  	}else{
+  		echo "Wrong password";
+  	}
+  		return false;
+  }
+
+  public function changeInfo($newInfo, $column)
+  {
+  	$fun = new functions();
+  	global $oDb;
+  	$id = $this->getUserId();
+	
+	$query = $oDb -> prepare("UPDATE Users SET $column = :paramP WHERE id= :paramI");
+	$query->bindParam(':paramP', $newInfo);
+	$query->bindParam(':paramI', $id);
+  	if($query->execute())
+  	return true;
+  }
+  	
+  	
+  	
+ 
 
 }
 

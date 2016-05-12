@@ -53,21 +53,27 @@
   		<label>Phone</label>
   		<input type="checkbox" class="changeInfoCheck" id="phoneCheck" value="phoneCheck">
 	</form>	
-		<form id="passwordForm" method="POST" action="classes/changeInfo.php" style="display:none">
+		<form class="changeInfoForm" id="passwordForm" method="POST" action="classes/changeInfo.php" style="display:none">
+			<label for="oldPassword">Old password</label>
 			<input type="text" name="oldPassword">
+			<label for="password">Password</label>
 			<input type="text" name="password">
+			<input type="hidden" name="action" value="password">
 			<input type="submit">
 		</form>
-		<form id="firstNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
+		<form class="changeInfoForm" id="firstNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
 			<input type="text" name="firstName">
+			<input type="hidden" name="action" value="firstName">
 			<input type="submit">
 		</form>
-		<form id="lastNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
+		<form class="changeInfoForm" id="lastNameForm" method="POST" action="classes/changeInfo.php" style="display:none">
 			<input type="text" name="lastName">
+			<input type="hidden" name="action" value="lastName">
 			<input type="submit">
 		</form>
-		<form id="phoneForm" method="POST" action="classes/changeInfo.php" style="display:none">
-			<input type="text" name="phone">
+		<form class="changeInfoForm" id="phoneForm" method="POST" action="classes/changeInfo.php" style="display:none">
+			<input type="number" name="phone">
+			<input type="hidden" name="action" value="phone">
 			<input type="submit">
 		</form>
 
@@ -84,7 +90,20 @@
 			        switch(selected)
 			        {
 			        	case 'passwordCheck':
-			        			$('#')
+			        			$('.changeInfoForm').fadeOut();
+			        			$('#passwordForm').fadeIn();
+			        	break;
+			        	case 'firstNameCheck':
+			        			$('.changeInfoForm').fadeOut();
+			        			$('#firstNameForm').fadeIn();
+			        	break;
+			        	case 'lastNameCheck':
+			        			$('.changeInfoForm').fadeOut();
+			        			$('#lastNameForm').fadeIn();
+			        	break;
+			        	case 'phoneCheck':
+			        			$('.changeInfoForm').fadeOut();
+			        			$('#phoneForm').fadeIn();
 			        	break;
 			        }
 			   
