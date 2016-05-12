@@ -1,4 +1,7 @@
-
+<?php 
+	require_once 'functions/token.php';
+	$token = setToken();
+?>
 
 <!DOCTYPE html>
 <html>
@@ -88,7 +91,8 @@
 			          		<input type="hidden" name="function" value="logIn">
 							<input type="text" placeholder="username" name="username">
 							<input type="text" placeholder="password" name="password">
-							<button type="submit">Login</button>
+							<input type="hidden" value="<?php echo $token ?>" name="token">
+							<button type="submit" data-id="ajaxLoginForm">Login</button>
 					  	</form>
 			      </div>
 			      <div class="modal-footer">
@@ -106,14 +110,16 @@
 			        <h4 class="modal-title" id="myModalLabel">Register</h4>
 			      </div>
 			      <div class="modal-body">
-				  	<form method="POST" action="classes/register.php">
+				  	<form id="ajaxRegisterForm" method="POST" action="functions/functions.php">
+				  		<input type="hidden" name="function" value="register">
 				  		<input type="text" placeholder="username" name="username"></input>
 				  		<input type="password" placeholder="password" name="password">
 				  		<input type="text" placeholder="email" name="email">
 				  		<input type="number" placeholder="phone" name="phone">
 				  		<input type="text" placeholder="First Name" name="firstName">
 				  		<input type="text" placeholder="Last Name" name="lastName">
-						<button type="submit">Register</button>
+				  		<input type="hidden" value="<?php echo $token ?>" name="token">
+						<button type="submit" data-id="ajaxRegisterForm">Register</button>
 				  	</form>
 			      </div>
 			      <div class="modal-footer">

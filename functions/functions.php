@@ -2,6 +2,7 @@
 	require_once '../classes/user.php';
 	require_once '../classes/functions.php';
 	require_once '../core/init.php';
+	require_once '../functions/token.php';
 
 
 	if(isset($_POST['function'])){
@@ -10,24 +11,28 @@
 
 		if($function == "logIn"){
 
-			if(isset($_POST['username']) && isset($_POST['password'])){
-				if(!empty($_POST['username']) && !empty($_POST['password']) ){
-					$username = $_POST['username'];
-					$password = $_POST['password'];
-					$obj = new user();
-					$obj->username = $username;
-					$obj->password = $password;
+			if(verifyToken()){               
+				if(isset($_POST['username']) && isset($_POST['password'])){
+					if(!empty($_POST['username']) && !empty($_POST['password']) ){
+						$username = $_POST['username'];
+						$password = $_POST['password'];
+						$obj = new user();
+						$obj->username = $username;
+						$obj->password = $password;
 
-						if(!$obj->login())
-						{
-							echo "error";
-						}else{
-							// echo "Hello ".urlencode($obj->username);
-							echo "success";
-							
-						// var_dump(session_status());
-						}
+							if(!$obj->login())
+							{
+								echo "error";
+							}else{
+								// echo "Hello ".urlencode($obj->username);
+								echo "success";
+								
+							// var_dump(session_status());
+							}
+					}
 				}
+			} else {
+				echo "error";
 			}
 
 		}
@@ -42,33 +47,41 @@
 		}
 
 		if($function == "register"){
+			if(verifyToken()){
+				if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['firstName']) && isset($_POST['lastName'])){
+					if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['firstName']) && !empty($_POST['lastName'])){
+						// ENCODE THE INPUTS
+						$username = $_POST['username'];
+						$password = $_POST['password'];
+						$email = $_POST['email'];
+						$phone = $_POST['phone'];
+						$firstName = $_POST['firstName'];
+						$lastName = $_POST['lastName'];
+						
+						if(ctype_digit($phone)) {
+							$obj = new user();
+							$fun = new functions();
+							// Hasing and salting password
+							$passwordHashed = $fun->hashFunction($password);
+							// Saving userdata to database
+							
+							$obj->setUsername($username);
+							$obj->setPassword($passwordHashed);
+							$obj->setEmail($email);
+							$obj->setPhone($phone);
+							$obj->setFirstName($firstName);
+							$obj->setLastName($lastName);
+							//Save
+							$obj->saveUser();
+						} else {
+							echo "Error: Only numbers in phone";
+						}
+						
 
-			if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['email']) && isset($_POST['phone']) && isset($_POST['firstName']) && isset($_POST['lastName'])){
-				if(!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['email']) && !empty($_POST['phone']) && !empty($_POST['firstName']) && !empty($_POST['lastName'])){
-					// ENCODE THE INPUTS
-					$username = $_POST['username'];
-					$password = $_POST['password'];
-					$email = $_POST['email'];
-					$phone = $_POST['phone'];
-					$firstName = $_POST['firstName'];
-					$lastName = $_POST['lastName'];
-					
-					
-					$obj = new user();
-					$fun = new functions();
-					// Hasing and salting password
-					$passwordHashed = $fun->hashFunction($password);
-					// Saving userdata to database
-					
-					$obj->setUsername($username);
-					$obj->setPassword($passwordHashed);
-					$obj->setEmail($email);
-					$obj->setPhone($phone);
-					$obj->setFirstName($firstName);
-					$obj->setLastName($lastName);
-					//Save
-					$obj->saveUser();
+					}
 				}
+			} else {
+				echo "error";
 			}
 		}
 

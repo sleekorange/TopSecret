@@ -1,17 +1,21 @@
 <?php
+    require_once 'functions/token.php';
 
     $post = new Post();
-    $obj = new user();
-
-    
+    $obj = new user();   
 
     if($obj->checkSession()){
         if (Input::exists()) {
-            try {
-                $post->create(Input::get('title'), Input::get('content'), $obj->getUserId());
-                header('Location: /topsecret/');
-            } catch(Exception $e) {
-                echo $error, '<br>';
+            if(verifyToken()){
+                echo "found token";
+                try {
+                    $post->create(Input::get('title'), Input::get('content'), $obj->getUserIdSession());
+                    header('Location: /topsecret/');
+                } catch(Exception $e) {
+                    echo $error, '<br>';
+                }
+            } else {
+                echo "no token";
             }
         }
 
@@ -19,10 +23,7 @@
         header('Location: /topsecret/');
     }
 
-
-
-
-
+    $token = setToken();
 ?>
 
 
@@ -46,6 +47,7 @@
                 <label for="fileToUpload">Upload image</label>
                 <input class="form-control" type="file" name="fileToUpload">
             </div>
+            <input type="hidden" value="<?php echo $token ?>" name="token">
         	<button type="submit" class="btn btn-success" >Submit</button>
     	 </form>
      </div>

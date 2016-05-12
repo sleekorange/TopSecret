@@ -1,6 +1,6 @@
 <?php 
 
-    require_once 'core/init.php';
+    require_once '../core/init.php';
     require_once 'library/htmlpurifier/library/HTMLPurifier.auto.php';
 
 	function escape($string) {

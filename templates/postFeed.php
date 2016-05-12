@@ -1,15 +1,22 @@
 <?php
+    require_once 'functions/token.php';
+
     $comment = new Comment();
     $post = new Post();
     $obj = new user();
+    
 
     if($obj->checkSession()){
       if (Input::exists()) {
+        if(verifyToken()){
           try {
-              $comment->create($obj->getUserId(), Input::get('postId') , Input::get('comment'));
+              $comment->create($obj->getUserIdSession(), Input::get('postId') , Input::get('comment'));
           } catch(Exception $e) {
               echo $error, '<br>';
           }
+        } else {
+          echo "No token!";
+        }
       }
     }
 
@@ -18,6 +25,8 @@
     } catch(Exception $e) {
         echo $error, '<br>';
     }
+
+    $token = setToken();
 ?>
 
 
@@ -60,6 +69,7 @@
                         <div class="form-group">
                         <label for="comment">Comment</label>
                         <input type="hidden" value="'.$data[$i]->id.'" name="postId">
+                        <input type="hidden" value="'.$token.'" name="token">
                         <textarea class="form-control commentContent" name="comment">Write your comment here...</textarea>
                         </div>
                         <button type="submit" class="btn btn-success" >Submit</button>';

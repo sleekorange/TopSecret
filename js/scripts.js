@@ -20,9 +20,19 @@
 // });
 
 
-$(document).ready(function() {
+    //Get ID
+$(document).on("click", "button[type='submit']", function(){
+    var formId =  $(this).attr("data-id");
+    
+    sendForm(formId);
+});
+
+
+function sendForm(formId) {
+    console.log(formId);
     // Get the form.
-    var form = $('#ajaxLoginForm');
+    var form = "#"+formId;
+    console.log(form);
 
     // // Get the messages div.
     // var formMessages = $('#form-messages');
@@ -53,9 +63,9 @@ $(document).ready(function() {
             console.log("Error " + data);
         });
     });
+}
 
 
-});
 
 $(document).on("click", "#logOutBtn", function(){
     
