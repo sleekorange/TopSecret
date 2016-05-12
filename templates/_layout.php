@@ -22,6 +22,7 @@
 		    	$obj = new user();
 		    	if($obj->checkSession()){
 		    		echo 'Welcome, '.$obj->getUserNameSession();
+		    		echo '<button data-toggle="modal" data-target="#myChange">Change info</button>    ';
 		    		echo '<button id="logOutBtn">Log Out</button>';
 		    	} else {
 		    		echo '<button data-toggle="modal" data-target="#myLogin">Login</button>    ';
@@ -121,6 +122,64 @@
 				  		<input type="hidden" value="<?php echo $token ?>" name="token">
 						<button type="submit" data-id="ajaxRegisterForm">Register</button>
 				  	</form>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<!-- Change Modal -->
+			<div class="modal fade" id="myChange" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="myModalLabel">Change my info</h4>
+			      </div>
+			      <div class="modal-body">
+				  	<form>
+				  		<label>Password</label>
+				  		<input type="checkbox" class="changeInfoCheck" id="passwordCheck" value="passwordCheck">
+				  		<label>First Name</label>
+				  		<input type="checkbox" class="changeInfoCheck" id="firstNameCheck" value="firstNameCheck">
+				  		<label>Last Name</label>
+				  		<input type="checkbox" class="changeInfoCheck" id="lastNameCheck" value="lastNameCheck">
+				  		<label>Phone</label>
+				  		<input type="checkbox" class="changeInfoCheck" id="phoneCheck" value="phoneCheck">
+					</form>
+
+						<form class="changeInfoForm" id="passwordForm" method="POST" action="functions/functions.php" style="display:none">
+							<input type="hidden" name="function" value="changeInfo">
+							<label for="oldPassword">Old password</label>
+							<input type="text" name="oldPassword">
+							<label for="password">Password</label>
+							<input type="text" name="password">
+							<input type="hidden" name="action" value="password">
+							<input type="hidden" value="<?php echo $token ?>" name="token">
+							<button type="submit" data-id="passwordForm">Change password</button>
+						</form>
+						<form class="changeInfoForm" id="firstNameForm" method="POST" action="functions/functions.php" style="display:none">
+							<input type="hidden" name="function" value="changeInfo">
+							<input type="text" name="firstName">
+							<input type="hidden" name="action" value="firstName">
+							<input type="hidden" value="<?php echo $token ?>" name="token">
+							<button type="submit" data-id="firstNameForm">Change first name</button>
+						</form>
+						<form class="changeInfoForm" id="lastNameForm" method="POST" action="functions/functions.php" style="display:none">
+							<input type="hidden" name="function" value="changeInfo">
+							<input type="text" name="lastName">
+							<input type="hidden" name="action" value="lastName">
+							<input type="hidden" value="<?php echo $token ?>" name="token">
+							<button type="submit" data-id="lastNameForm">Change lastname</button>
+						</form>
+						<form class="changeInfoForm" id="phoneForm" method="POST" action="functions/functions.php" style="display:none">
+							<input type="hidden" name="function" value="changeInfo">
+							<input type="number" name="phone">
+							<input type="hidden" name="action" value="phone">
+							<input type="hidden" value="<?php echo $token ?>" name="token">
+							<button type="submit" data-id="phoneForm">Change Phone</button>
+						</form>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

@@ -65,6 +65,32 @@ function sendForm(formId) {
     });
 }
 
+$('.changeInfoCheck').on('change', function() {
+                    $('.changeInfoCheck').not(this).prop('checked', false); 
+                    var selected =  $(this).val();
+                    console.log(selected);
+                    switch(selected)
+                    {
+                        case 'passwordCheck':
+                                $('.changeInfoForm').fadeOut();
+                                $('#passwordForm').fadeIn();
+                        break;
+                        case 'firstNameCheck':
+                                $('.changeInfoForm').fadeOut();
+                                $('#firstNameForm').fadeIn();
+                        break;
+                        case 'lastNameCheck':
+                                $('.changeInfoForm').fadeOut();
+                                $('#lastNameForm').fadeIn();
+                        break;
+                        case 'phoneCheck':
+                                $('.changeInfoForm').fadeOut();
+                                $('#phoneForm').fadeIn();
+                        break;
+                    }
+               
+                })
+
 
 
 $(document).on("click", "#logOutBtn", function(){

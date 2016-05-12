@@ -27,7 +27,7 @@ class Post {
 
     public function getAll() {
         global $oDb;
-        $oQuery = $oDb->prepare("SELECT *, (SELECT COUNT(*) FROM Comments WHERE postId = Posts.id) AS commentsCount FROM Posts");
+        $oQuery = $oDb->prepare("SELECT *, (SELECT COUNT(*) FROM Comments WHERE postId = Posts.id) AS commentsCount, (SELECT firstName FROM Users WHERE userId = id) AS name FROM Posts");
         $oQuery->execute();
         $aResults = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 

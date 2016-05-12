@@ -53,8 +53,8 @@
 
               echo '<div class="blogPost">';
               echo '<h3>'. $data[$i]->title .'</h3>';
-              echo '<span class="postCreator">Userid: ';
-              echo $data[$i]->userId;
+              echo '<span class="postCreator">Name: ';
+              echo $data[$i]->name;
               echo '</span>';
               echo '<p>'. $data[$i]->postText .'</p>';
               echo '<div class="blogPostImg">';
