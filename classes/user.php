@@ -92,11 +92,12 @@ public function __construct() {
 	$query->bindParam(':paramName', $username);
 	$query->execute();
 	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
-	var_dump($aResult);
+  // if its not empty
 	if(!empty($aResult))
 	{
 		return false;
 	}
+  // if its empty
 	return true;
   }
   public function saveUser()

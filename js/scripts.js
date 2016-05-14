@@ -53,7 +53,7 @@ function sendForm(formId) {
         }).done(function (data) {
             console.log(data);
             if(data == "success") {
-               location.reload(); 
+               //location.reload(); 
            } else {
                console.log(data); 
            }

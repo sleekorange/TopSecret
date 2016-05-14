@@ -1,5 +1,6 @@
 <?php 
 	require_once '../classes/user.php';
+	require_once '../classes/iplog.php';
 	require_once '../classes/functions.php';
 	require_once '../core/init.php';
 	require_once '../functions/token.php';
@@ -19,11 +20,15 @@
 						$obj = new user();
 						$obj->username = $username;
 						$obj->password = $password;
-
+						$iplog = new iplog();	
+						$iplog->retrieveIp();
 							if(!$obj->login())
 							{
-								echo "error";
+								$iplog->logIp($obj);
+
 							}else{
+								echo($iplog->checkUserBan($obj));
+								echo($iplog->checkIpBan());
 								// echo "Hello ".urlencode($obj->username);
 								echo "success";
 								
