@@ -53,12 +53,12 @@ class iplog {
 	 	// if user does exist
 		if($obj->userExist($username) != true)
 		{
-			
+
 		}else
 		{
 			// user doesnt exist
-			
-			$this->setError("NoneUser"); 
+
+			$this->setError("NoneUser");
 		}
 		if(!empty($this->getError()))
 		{
@@ -71,7 +71,7 @@ class iplog {
 	  	$query->bindParam(':paramE', $error);
 	  	if($query->execute())
 	  	{
-	  		
+
 	  	}
 	}
 
@@ -80,7 +80,7 @@ class iplog {
 		global $oDb;
 		$username = $obj->username;
 
-		$query = $oDb->prepare("SELECT * FROM Log WHERE `time` > timestampadd(day, -1, now()) AND userId = (SELECT id FROM Users WHERE username = :paramN)");
+		$query = $oDb->prepare("SELECT id FROM Log WHERE `time` > timestampadd(day, -1, now()) AND userId = (SELECT id FROM Users WHERE username = :paramN)");
 		$query -> bindParam(':paramN', $username);
 		$query->execute();
 		$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -115,10 +115,10 @@ class iplog {
 		    }else{
 		    	 return false;
 		    }
-		    
+
 		}
 	}
-	
+
 
 
 }

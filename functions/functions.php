@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require_once '../classes/user.php';
 	require_once '../classes/iplog.php';
 	require_once '../classes/functions.php';
@@ -7,12 +7,12 @@
 
 
 	if(isset($_POST['function'])){
-	
+
 	$function = $_POST['function'];
 
 		if($function == "logIn"){
 
-			if(verifyToken()){               
+			if(verifyToken()){
 				if(isset($_POST['username']) && isset($_POST['password'])){
 					if(!empty($_POST['username']) && !empty($_POST['password']) ){
 						$username = $_POST['username'];
@@ -20,7 +20,7 @@
 						$obj = new user();
 						$obj->username = $username;
 						$obj->password = $password;
-						$iplog = new iplog();	
+						$iplog = new iplog();
 						$iplog->retrieveIp();
 							if($iplog->checkUserBan($obj))
 								{
@@ -31,15 +31,13 @@
 									$iplog->logIp($obj);
 								}
 								else{
-									// no ban or other, login!
+									// no ban or other then login!
 									if(!$obj->login())
 									{
 										$iplog->logIp($obj);
-
 									}else{
-										echo "success";						
+										echo "success";
 									}
-							
 					}
 				}
 			} else {
@@ -68,14 +66,14 @@
 						$phone = $_POST['phone'];
 						$firstName = $_POST['firstName'];
 						$lastName = $_POST['lastName'];
-						
+
 						if(ctype_digit($phone)) {
 							$obj = new user();
 							$fun = new functions();
 							// Hasing and salting password
 							$passwordHashed = $fun->hashFunction($password);
 							// Saving userdata to database
-							
+
 							$obj->setUsername($username);
 							$obj->setPassword($passwordHashed);
 							$obj->setEmail($email);
@@ -87,7 +85,7 @@
 						} else {
 							echo "Error: Only numbers in phone";
 						}
-						
+
 
 					}
 				}
@@ -137,7 +135,7 @@
 						}
 					break;
 					}
-				}	
+				}
 			} else {
 				echo "error";
 			}
@@ -156,7 +154,7 @@
 				if(trim($hash) == trim($aResult[0]['password']))
 					echo "2";
 				{
-					
+
 					$query = $oDb->prepare("UPDATE Users SET active = 1 WHERE id = ".$aResult[0]['id']."");
 					if($query->execute())
 						{
@@ -170,7 +168,7 @@
 			}
 		}
 
-	} 
+	}
 
 
 ?>
