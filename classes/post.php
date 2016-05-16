@@ -9,7 +9,7 @@ class Post {
 
     public function create($title, $post, $userId) {
         global $oDb;       
-        $oQuery = $oDb->prepare("INSERT INTO Posts (title, postText, userId, deleted) VALUES( :sTitle, :sPost, :sUserId, 0)");
+        $oQuery = $oDb->prepare("INSERT INTO Posts (title, postText, userId, deleted, created, updated) VALUES( :sTitle, :sPost, :sUserId, 0, now(), now())");
         $oQuery->bindValue(':sTitle', $title);
         $oQuery->bindValue(':sPost', $post);
         $oQuery->bindValue(':sUserId', $userId);
@@ -27,11 +27,49 @@ class Post {
 
     public function getAll() {
         global $oDb;
-        $oQuery = $oDb->prepare("SELECT *, (SELECT COUNT(*) FROM Comments WHERE postId = Posts.id) AS commentsCount, (SELECT firstName FROM Users WHERE userId = id) AS name FROM Posts");
+        $oQuery = $oDb->prepare("SELECT *, (SELECT COUNT(*) FROM Comments WHERE postId = Posts.id AND Comments.deleted = 0) AS commentsCount, (SELECT firstName FROM Users WHERE userId = id) AS name FROM Posts WHERE deleted = 0 ORDER BY created DESC");
         $oQuery->execute();
         $aResults = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
         return json_encode($aResults);
+    }
+
+    public function getUserPosts($userId) {
+        global $oDb;
+        $oQuery = $oDb->prepare("SELECT * FROM Posts WHERE userId = :sUserId");
+        $oQuery->bindValue(':sUserId', $userId);
+        $oQuery->execute();
+        $aResults = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($aResults);
+    }
+
+    public function getPost($postId, $userId) {
+        global $oDb;
+        $oQuery = $oDb->prepare("SELECT * FROM Posts WHERE id = :sPostId AND userId = :sUserId");
+        $oQuery->bindValue(':sPostId', $postId);
+        $oQuery->bindValue(':sUserId', $userId);
+        $oQuery->execute();
+        $aResults = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        return json_encode($aResults);
+    }
+
+    public function updatePost($title, $post, $userId, $postId) {
+        global $oDb; 
+        $oQuery = $oDb->prepare("UPDATE Posts SET title = :sTitle, postText = :sPost, updated = now() WHERE id = :sPostId AND userId = :sUserId");
+        $oQuery->bindValue(':sTitle', $title);
+        $oQuery->bindValue(':sPost', $post);
+        $oQuery->bindParam(':sPostId', $postId);
+        $oQuery->bindParam(':sUserId', $userId);
+        $oQuery->execute();
+    }
+
+    public function deletePost($postId){
+        global $oDb;
+        $oQuery = $oDb->prepare("UPDATE Posts SET deleted = 1 WHERE id = :sPostId");
+        $oQuery->bindParam(':sPostId', $postId);
+        $oQuery->execute();
     }
 
     function showImgs($path){

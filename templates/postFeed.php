@@ -7,7 +7,7 @@
     
 
     if($obj->checkSession()){
-      if (Input::exists()) {
+      if (Input::exists("post")) {
         if(verifyToken()){
           try {
               $comment->create($obj->getUserIdSession(), Input::get('postId') , Input::get('comment'));
@@ -17,7 +17,30 @@
         } else {
           echo "No token!";
         }
-      }
+      } else if (Input::exists("get")) {
+          if(isset($_GET['postId'])){
+            try {
+                $post->deletePost(Input::get('postId'));
+            } catch(Exception $e) {
+                echo $error, '<br>';
+            }
+
+            try {
+                $comment->deleteAllComments(Input::get('postId'));
+            } catch(Exception $e) {
+                echo $error, '<br>';
+            }
+          }
+
+          if(isset($_GET['commentId'])){
+            try {
+                $comment->deleteComment(Input::get('commentId'));
+            } catch(Exception $e) {
+                echo $error, '<br>';
+            }
+            
+          }
+        }
     }
 
 	try {
@@ -52,9 +75,12 @@
               }
 
               echo '<div class="blogPost">';
-              echo '<h3>'. $data[$i]->title .'</h3>';
+              if($obj->getUserLevel() == 1){
+                echo '<a href="?postId='. $data[$i]->id .'">Delete post</a>';
+              } 
+              echo '<h3>'. urlencode($data[$i]->title) .'</h3>';
               echo '<span class="postCreator">Name: ';
-              echo $data[$i]->name;
+              echo urlencode($data[$i]->name);
               echo '</span>';
               echo '<p>'. $data[$i]->postText .'</p>';
               echo '<div class="blogPostImg">';
@@ -77,7 +103,9 @@
                 } 
                 echo '<div class="commentsDiv">';
                 for ($j=0; $j < sizeof($comments); $j++) {
-                      
+                      if($obj->getUserLevel() == 1){
+                        echo '<a href="?commentId='. $comments[$j]->id .'">Delete comment</a>';
+                      } 
                       echo '<div class="commentBox">';
                       echo '<p><b>'.$comments[$j]->name.'</b></p>';
                       echo $comments[$j]->commText;
@@ -90,6 +118,7 @@
           }        
       ?>
 	 </div>
+
 
 
 

@@ -9,10 +9,11 @@
 
 	function verifyToken() {
 		if($_SESSION["token"] != $_POST["token"] || empty($_SESSION["token"])){
-			return false;
+			return "hej false";
         } else {
-        	return true;
+        	return "hej true";
         }
+
 	}
 
 

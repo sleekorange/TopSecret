@@ -3,39 +3,47 @@
 	require_once '../classes/functions.php';
 	require_once '../core/init.php';
 	require_once '../functions/token.php';
-
+	require_once '../classes/iplog.php';
 
 	if(isset($_POST['function'])){
 	
 	$function = $_POST['function'];
 
 		if($function == "logIn"){
-
-			if(verifyToken()){               
-				if(isset($_POST['username']) && isset($_POST['password'])){
-					if(!empty($_POST['username']) && !empty($_POST['password']) ){
-						$username = $_POST['username'];
-						$password = $_POST['password'];
-						$obj = new user();
-						$obj->username = $username;
-						$obj->password = $password;
-
-							if(!$obj->login())
-							{
-								echo "error";
-							}else{
-								// echo "Hello ".urlencode($obj->username);
-								echo "success";
-								
-							// var_dump(session_status());
+					if(verifyToken()){
+						if(isset($_POST['username']) && isset($_POST['password'])){
+							if(!empty($_POST['username']) && !empty($_POST['password']) ){
+								$username = $_POST['username'];
+								$password = $_POST['password'];
+								$obj = new user();
+								$obj->username = $username;
+								$obj->password = $password;
+								$iplog = new iplog();
+								$iplog->retrieveIp();
+									if($iplog->checkUserBan($obj))
+										{
+											$iplog->logIp($obj);
+										}
+										else if($iplog->checkIpBan())
+										{
+											$iplog->logIp($obj);
+										}
+										else{
+											// no ban or other then login!
+											if(!$obj->login())
+											{
+												$iplog->logIp($obj);
+											}else{
+												echo "success";
+											}
 							}
+						}
+					} else {
+						echo "error";
 					}
 				}
-			} else {
-				echo "error";
 			}
 
-		}
 
 		if($function == "logOut"){
 			$obj = new user();

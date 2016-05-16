@@ -30,6 +30,37 @@ public function __construct() {
     } 
   }
 
+  public function getUserLevel(){
+    if($this->checkSession()){
+      $user = json_decode($_SESSION['theActiveUserIs']);
+      $level = $user[0]->level;
+      return $level;
+    } 
+  }
+
+  public function getAllUsers(){
+    global $oDb;
+    $oQuery = $oDb->prepare("SELECT * FROM Users");
+    $oQuery->execute();
+    $aResults = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    return json_encode($aResults);
+  }
+
+  public function deleteUser($userId){
+    global $oDb;
+    $oQuery = $oDb->prepare("UPDATE Users SET deleted = 1 WHERE id = :sUserId");
+    $oQuery->bindParam(':sUserId', $userId);
+    $oQuery->execute();
+  }
+
+  public function unDeleteUser($userId){
+    global $oDb;
+    $oQuery = $oDb->prepare("UPDATE Users SET deleted = 0 WHERE id = :sUserId");
+    $oQuery->bindParam(':sUserId', $userId);
+    $oQuery->execute();
+  }
+
 	public function setUsername($newUsername)
   {
       $this->username = $newUsername;
@@ -87,12 +118,10 @@ public function __construct() {
   public function userExist($username)
   {
   	global $oDb;
-  	echo "checking if user exists";
   	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramName");
 	$query->bindParam(':paramName', $username);
 	$query->execute();
 	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
-	var_dump($aResult);
 	if(!empty($aResult))
 	{
 		return false;
@@ -111,7 +140,7 @@ public function __construct() {
  	// check if user exist
 	if($this->userExist($username) != true)
 	{
-		echo "User creation failed";
+
 		return false;
 	}
 	// User does not exist. Creating user
@@ -153,7 +182,7 @@ public function __construct() {
   	$username = $this -> getUsername();
   	$password = $this -> getPassword();
   	// fetch from database
-  	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramN");
+  	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramN AND deleted= 0");
   	$query -> bindParam(':paramN', $username);
   	$query->execute();
   	$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -224,7 +253,6 @@ public function __construct() {
     if($fun->deHashFunction($oldPassword,$hash))
     {
       if($hashNewPassword = $fun->hashFunction($newPassword)){
-        echo $hashNewPassword;
         $query = $oDb->prepare("UPDATE Users SET password= :paramP WHERE id= :paramI");
         $query->bindParam(':paramP', $hashNewPassword);
         $query->bindParam(':paramI', $id);
@@ -235,8 +263,6 @@ public function __construct() {
         }
         }
       }
-    }else{
-      echo "Wrong password";
     }
       return false;
   }

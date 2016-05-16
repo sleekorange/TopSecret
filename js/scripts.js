@@ -23,13 +23,14 @@
     //Get ID
 $(document).on("click", "button[type='submit']", function(){
     var formId =  $(this).attr("data-id");
-    
+    console.log("Click!");
     sendForm(formId);
+    
 });
 
 
 function sendForm(formId) {
-    console.log(formId);
+    console.log("Send form is running..");
     // Get the form.
     var form = "#"+formId;
     console.log(form);
@@ -37,32 +38,41 @@ function sendForm(formId) {
     // // Get the messages div.
     // var formMessages = $('#form-messages');
 
+    var count = 1;
+    console.log(count);
     /// Set up an event listener for the contact form.
     $(form).submit(function(event) {
+        var form = this;
+        
         // Stop the browser from submitting the form.
         event.preventDefault();
 
             // Serialize the form data.
         var formData = $(form).serialize();
-        console.log(formData);
+        
+        if(count == 1){
+            $.ajax({
+                url: $(form).attr('action'),
+                data: formData,
+                method: "POST"
+            }).done(function (data) {
+                if(data == "success") {
+                    count++;
+                   console.log(data); 
 
-        $.ajax({
-            url: $(form).attr('action'),
-            data: formData,
-            method: "POST"
-        }).done(function (data) {
-            console.log(data);
-            if(data == "success") {
-               location.reload(); 
-           } else {
-               console.log(data); 
-           }
-            
-        })
-        .fail(function (data) {
-            console.log("Error " + data);
-        });
+                   //location.reload(); 
+               } else {
+                    count++;
+                   console.log(data); 
+               }
+            })
+            .fail(function (data) {
+                console.log("Error " + data);
+            });
+        }
+
     });
+
 }
 
 $('.changeInfoCheck').on('change', function() {

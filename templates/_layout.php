@@ -21,9 +21,12 @@
 		    	<?php 
 		    	$obj = new user();
 		    	if($obj->checkSession()){
-		    		echo 'Welcome, '.$obj->getUserNameSession();
+		    		echo 'Welcome, '.urlencode($obj->getUserNameSession());
 		    		echo '<button data-toggle="modal" data-target="#myChange">Change info</button>    ';
 		    		echo '<button id="logOutBtn">Log Out</button>';
+		    		if($obj->getUserLevel() == 1){
+		    			echo '    IM ADMIN! YEAH!';
+		    		}
 		    	} else {
 		    		echo '<button data-toggle="modal" data-target="#myLogin">Login</button>    ';
 		    		echo '<button data-toggle="modal" data-target="#myRegister">Register</button>';
