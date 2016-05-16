@@ -44,17 +44,20 @@ class iplog {
 	{
 
   		global $oDb;
-	  	$error = "PasswordOrOther";
+  		//set new error if empty
+  		if(empty($this->getError()))
+	  		$error = "PasswordOrOther";
+
 	  	$ip = $this->getIp();
 	  	$username = $obj->username;
 	 	// if user does exist
 		if($obj->userExist($username) != true)
 		{
-			echo "user exists!";
+			
 		}else
 		{
 			// user doesnt exist
-			echo "User DOES NOT exist!";
+			
 			$this->setError("NoneUser"); 
 		}
 		if(!empty($this->getError()))
@@ -68,7 +71,7 @@ class iplog {
 	  	$query->bindParam(':paramE', $error);
 	  	if($query->execute())
 	  	{
-	  		echo "query is a Success!";
+	  		
 	  	}
 	}
 
@@ -77,7 +80,7 @@ class iplog {
 		global $oDb;
 		$username = $obj->username;
 
-		$query = $oDb->prepare("SELECT id FROM Log WHERE userId = (SELECT id FROM Users WHERE username = :paramN)");
+		$query = $oDb->prepare("SELECT * FROM Log WHERE `time` > timestampadd(day, -1, now()) AND userId = (SELECT id FROM Users WHERE username = :paramN)");
 		$query -> bindParam(':paramN', $username);
 		$query->execute();
 		$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -86,8 +89,10 @@ class iplog {
 		if(!empty($aResult))
 		{
 		    if($count > 3){
-		      return "User has been banned";
+		    	$this->setError("User has been banned");
+		      	return true;
 		    }
+		    return false;
 		}
 	}
 
@@ -95,7 +100,7 @@ class iplog {
 	{
 		global $oDb;
 		$ip = $this->getIp();
-		$query = $oDb->prepare("SELECT id FROM Log WHERE ip = :paramI");
+		$query = $oDb->prepare("SELECT * FROM Log WHERE time > timestampadd(day, -1, now()) AND userId=:paramI");
 		$query -> bindParam(':paramI', $ip);
 		$query->execute();
 		$aResult = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -104,8 +109,13 @@ class iplog {
 		if(!empty($aResult))
 		{
 		    if($count > 3){
-		      return "User has been ip - banned";
+		    	$this->setError("IP has been banned");
+		      	return true;
+
+		    }else{
+		    	 return false;
 		    }
+		    
 		}
 	}
 	

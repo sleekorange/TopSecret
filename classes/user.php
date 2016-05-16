@@ -87,7 +87,6 @@ public function __construct() {
   public function userExist($username)
   {
   	global $oDb;
-  	echo "checking if user exists";
   	$query = $oDb->prepare("SELECT * FROM Users WHERE username = :paramName");
 	$query->bindParam(':paramName', $username);
 	$query->execute();

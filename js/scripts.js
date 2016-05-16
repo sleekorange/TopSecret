@@ -44,7 +44,6 @@ function sendForm(formId) {
 
             // Serialize the form data.
         var formData = $(form).serialize();
-        console.log(formData);
 
         $.ajax({
             url: $(form).attr('action'),
@@ -53,9 +52,9 @@ function sendForm(formId) {
         }).done(function (data) {
             console.log(data);
             if(data == "success") {
-               //location.reload(); 
+               location.reload(); 
            } else {
-               console.log(data); 
+               location.reload(); 
            }
             
         })

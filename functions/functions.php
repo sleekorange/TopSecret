@@ -22,18 +22,24 @@
 						$obj->password = $password;
 						$iplog = new iplog();	
 						$iplog->retrieveIp();
-							if(!$obj->login())
-							{
-								$iplog->logIp($obj);
+							if($iplog->checkUserBan($obj))
+								{
+									$iplog->logIp($obj);
+								}
+								else if($iplog->checkIpBan())
+								{
+									$iplog->logIp($obj);
+								}
+								else{
+									// no ban or other, login!
+									if(!$obj->login())
+									{
+										$iplog->logIp($obj);
 
-							}else{
-								echo($iplog->checkUserBan($obj));
-								echo($iplog->checkIpBan());
-								// echo "Hello ".urlencode($obj->username);
-								echo "success";
-								
-							// var_dump(session_status());
-							}
+									}else{
+										echo "success";						
+									}
+							
 					}
 				}
 			} else {
